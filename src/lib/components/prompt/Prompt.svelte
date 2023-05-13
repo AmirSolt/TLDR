@@ -19,12 +19,12 @@
 
     {#if !session?.user}
             <AuthForm />
-    {:else if $wallet.plan=="FREE" && $wallet.credit < 1} 
+    {:else if $wallet.plan=="FREE" && $wallet.credits < 1} 
         <!-- if free and usage pass credit -->
         <PaymentPrompt />
-    {:else if $wallet.plan=="PRO" && $wallet.credit < 1} 
+    {:else if $wallet.plan=="PRO" && $wallet.credits < 1} 
         <h3>
-            You have used up all your credit for this month.
+            You have used up all your credits for this month.
         </h3>
     {:else}
         <Chat />

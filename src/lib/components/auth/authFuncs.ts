@@ -1,8 +1,7 @@
 
 
 import { signUpSchema, signInSchema, tokenVerifySchema } from '$lib/schemas/auth'
-import { redirect } from '@sveltejs/kit'
-
+import {loadInWallet} from '$lib/data/stores'
 
 
 
@@ -17,18 +16,14 @@ export const signup = async (supabase, formData ) => {
             message: "Invalid credentials"
         }
     }
-    console.log("///////////////////////")
-    console.log("email", email)
-    console.log("password", password)
+
 
     const { data, error: err } = await supabase.auth.signUp({
         email: email,
         password: password,
     })
 
-    console.log("........................")
-    console.log("data", data)
-    console.log("err", err)
+
 
     if (err) {
         return {
@@ -65,9 +60,10 @@ export const login = async (supabase, formData ) => {
         password: password,
     })
 
-    console.log("........................")
-    console.log("data", data)
-    console.log("err", err)
+
+
+    loadInWallet(data.user.id, supabase)
+
 
     if (err) {
         return {
@@ -106,9 +102,7 @@ export const verifyToken = async (supabase, formData ) => {
         type:"email",
     })
 
-    console.log("........................")
-    console.log("data", data)
-    console.log("err", err)
+    loadInWallet(data.user.id, supabase);
 
     if (err) {
         return {
@@ -123,3 +117,10 @@ export const verifyToken = async (supabase, formData ) => {
         message: "Authentification success"
     }
 }
+
+
+
+
+
+
+	

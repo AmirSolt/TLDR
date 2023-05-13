@@ -17,7 +17,6 @@
     async function signupForm(e) {
         const form = e.target
         const data = new FormData(form)
-        console.log(data)
         response = await signup(supabase, data)
 
 

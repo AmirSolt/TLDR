@@ -24,22 +24,18 @@
 			<AuthForm />
 		</Modal>
 	</div>
-{:else if $wallet?.plan === 'FREE'}
+{:else if $wallet?.credits < 1}
 	<div class="card p-4 variant-soft-primary">
 		<h3>
-			Please subscribe to use the chat
-			<button class="btn variant-filled" type="button" on:click={() => (showModal2 = true)}>
-				PRO
-			</button>
-		</h3>
-		<Modal bind:showModal={showModal2}>
-			<PaymentPrompt />
-		</Modal>
-	</div>
-{:else if $wallet?.credit < 1}
-	<div class="card p-4 variant-soft-primary">
-		<h3>
-            You have used up all your credit for this month.
+            You have used up all your credits for this month.
         </h3>
+	</div>
+
+{:else if $wallet?.credits > 0}
+
+	<div class="card p-4 variant-soft-primary">
+		<h3>
+			You have <b>{$wallet?.credits}</b>  credits.
+		</h3>
 	</div>
 {/if}

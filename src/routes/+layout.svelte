@@ -16,30 +16,16 @@
 	$: ({ supabase, session } = data);
 	
 	
+	import {loadInWallet} from '$lib/data/stores'
 	
-	
-	import {wallet} from '$lib/data/stores';
 
-	async function fetchData(){
-		if(!session?.user?.id) return;
-
-		if (!$wallet.plan) {
-			let results = await supabase.from('wallets').select('plan, credit').eq('id', session?.user.id).single()
-			if(results.error){
-				console.log(results.error);
-				return;
-			}
-			wallet.set(
-				results.data?? {}
-			)
-		}
-	}
 
 
 	onMount(() => {
-		fetchData();
+		loadInWallet(session?.user.id, supabase)
 		// ================================
 		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
+
 			if (_session?.expires_at !== session?.expires_at) {
 				invalidate('supabase:auth');
 			}
