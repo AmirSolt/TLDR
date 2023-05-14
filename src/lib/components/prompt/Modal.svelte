@@ -8,6 +8,7 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
+{#if showModal}
 <dialog
 	class="card rounded-lg p-0 w-5/6 h-5/6 max-w-2xl "
 	bind:this={dialog}
@@ -29,8 +30,7 @@
 		
 	</div>
 </dialog>
-
-
+{/if}
 
 <style>
 

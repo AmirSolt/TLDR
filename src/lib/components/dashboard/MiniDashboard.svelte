@@ -7,43 +7,68 @@
 	import PaymentPrompt from '$lib/components/payment/PaymentPrompt.svelte';
 	import Modal from '$lib/components/prompt/Modal.svelte';
 
-	let showModal1: boolean = false;
+	let showModalAuth: boolean = false;
+	let showModalPayment: boolean = false;
+
+	let bgColor = 'success'
+	let  isSubscribed: boolean = false;
+	let hasCredits: boolean = false;
+	let  highCredits: boolean = false;
+
+	$: if ($wallet?.plan == 'FREE') {
+			isSubscribed = false;
+			bgColor = "warning"
+		}else if ($wallet?.credits < 1) {
+			hasCredits = false;
+			bgColor = "error"
+		}else if ($wallet?.credits < 4) {
+			highCredits = false;
+			bgColor = "warning"
+		}
+
+
 </script>
 
-{#if !session?.user}
-	<div class="card p-4 variant-ghost-warning">
+
+
+<div class="card h-18 p-4 variant-soft-{bgColor}">
+
+	{#if !session?.user}
 		<h3>
 			You are not logged in
-			<button class="btn variant-filled" type="button" on:click={() => (showModal1 = true)}>
+			<button class="btn variant-filled" type="button" on:click={() => (showModalAuth = true)}>
 				Register/Login
 			</button>
 		</h3>
-
-		<Modal bind:showModal={showModal1}>
+	
+		<Modal bind:showModal={showModalAuth}>
 			<AuthForm />
 		</Modal>
-	</div>
-{:else if $wallet?.credits < 1}
-	<div class="card p-4 variant-soft-error">
-		<h3>
-            You have used up all your credits for this month.
-        </h3>
-	</div>
 
-{:else if  $wallet?.credits > 0 && $wallet?.credits < 3}
+	{:else}
 
-	<div class="card p-4 variant-ghost-warning">
-		<h3>
-			You only have <b>{$wallet?.credits}</b>  credits.
-		</h3>
-	</div>
-
-
-{:else if $wallet?.credits > 0 && $wallet?.credits > 2}
-
-	<div class="card p-4 variant-soft-secondary">
 		<h3>
 			You have <b>{$wallet?.credits}</b>  credits.
 		</h3>
-	</div>
-{/if}
+		<span></span>
+
+	
+		{#if !isSubscribed}
+
+			<h3>
+				You are not subscribed
+				<button class="btn variant-filled" type="button" on:click={() => (showModalPayment = true)}>
+					Subscribe
+				</button>
+			</h3>
+
+			<Modal bind:showModal={showModalPayment}>
+				<PaymentPrompt />
+			</Modal>
+
+		{/if}
+
+
+	{/if}
+
+</div>
