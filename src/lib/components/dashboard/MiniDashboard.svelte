@@ -10,28 +10,30 @@
 	let showModalAuth: boolean = false;
 	let showModalPayment: boolean = false;
 
-	let bgColor:string;
+	let bgColor:string = 'success';
 	let  isSubscribed: boolean = false;
 	let hasCredits: boolean = false;
 	let  highCredits: boolean = false;
 
-	$: if ($wallet?.plan == 'FREE') {
-			isSubscribed = false;
-			bgColor = "warning"
-		}else if ($wallet?.credits < 1) {
-			hasCredits = false;
-			bgColor = "error"
-		}else if ($wallet?.credits < 4) {
-			highCredits = false;
-			bgColor = "warning"
-		}
+	$: if(!session?.user){
+		bgColor = "warning"
+	} else if ($wallet?.plan == 'FREE') {
+		isSubscribed = false;
+		bgColor = "warning"
+	}else if ($wallet?.credits < 1) {
+		hasCredits = false;
+		bgColor = "error"
+	}else if ($wallet?.credits < 4) {
+		highCredits = false;
+		bgColor = "warning"
+	}
 
 
 </script>
 
-{#if bgColor}
+{#key bgColor}
 
-<div class="card h-18 p-4 variant-ghost-warning ">
+<div class="card h-18 p-4 variant-ghost-success variant-ghost-{bgColor} ">
 
 	{#if !session?.user}
 		<h3>
@@ -79,4 +81,4 @@
 	{/if}
 
 </div>
-{/if}
+{/key}
