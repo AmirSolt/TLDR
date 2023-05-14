@@ -10,7 +10,7 @@
 	let showModalAuth: boolean = false;
 	let showModalPayment: boolean = false;
 
-	let bgColor = 'success'
+	let bgColor:string;
 	let  isSubscribed: boolean = false;
 	let hasCredits: boolean = false;
 	let  highCredits: boolean = false;
@@ -29,9 +29,9 @@
 
 </script>
 
+{#if bgColor}
 
-
-<div class="card h-18 p-4 variant-soft-{bgColor}">
+<div class="card h-18 p-4 variant-ghost-warning ">
 
 	{#if !session?.user}
 		<h3>
@@ -79,3 +79,4 @@
 	{/if}
 
 </div>
+{/if}

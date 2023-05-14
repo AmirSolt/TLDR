@@ -1,6 +1,7 @@
 <script lang="ts">
     import {X} from "lucide-svelte";
     import ChatPrompt from "$lib/components/prompt/ChatPrompt.svelte";
+    import { Avatar } from '@skeletonlabs/skeleton';
     let showPrompt: boolean = false;
 
     import {compareList} from '$lib/data/stores';
@@ -25,10 +26,11 @@
     <div >
         {#each $compareList as product}
         <!-- using tailwind turnecate button text in a way that it starts from begining and cuts in the middle -->
-        <button type="button" class="w-48  btn variant-filled" on:click={()=>removeCompareProduct(product)}>
-                <span class="truncate">
+        <button type="button" class="w-48  btn variant-ghost m-2" on:click={()=>removeCompareProduct(product)}>
+                <img class="min-w-8 min-h-8 max-w-12 max-h-12 rounded-lg" src="{product.thumbnail}" alt="Thumbnail">
+                <!-- <span class="truncate">
                     {product.title}
-                </span>
+                </span> -->
                 <span>
                     <X />
                 </span>
