@@ -10,23 +10,27 @@
 
     import {compareList} from '$lib/data/stores';
 
+    // array that only includes 'auth', 'payment', 'chat'
+    type PromptTypes = Array<'auth' | 'payment' | 'chat'>;
+
+    export let promptTypes: PromptTypes = ['auth', 'payment', 'chat'];
     export let showPrompt: boolean = false;    
 
 </script>
 
 <Modal bind:showModal={showPrompt}>
- 
-
-    {#if !session?.user}
-            <AuthForm />
-    {:else if $wallet.plan=="FREE" && $wallet.credits < 1} 
-        <!-- if free and usage pass credit -->
-        <PaymentPrompt />
-    {:else if $wallet.plan=="PRO" && $wallet.credits < 1} 
-        <h3>
-            You have used up all your credits for this month.
-        </h3>
-    {:else}
-        <Chat />
+    {#if showPrompt}
+        {#if !session?.user}
+                <AuthForm />
+        {:else if $wallet.plan=="FREE" && $wallet.credits < 1} 
+            <!-- if free and usage pass credit -->
+            <PaymentPrompt />
+        {:else if $wallet.plan=="PRO" && $wallet.credits < 1} 
+            <h3>
+                You have used up all your credits for this month.
+            </h3>
+        {:else}
+            <Chat />
+        {/if}
     {/if}
 </Modal>
