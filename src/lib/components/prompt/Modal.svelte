@@ -9,20 +9,19 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <dialog
-	class="card rounded-lg p-2 w-5/6 h-5/6 max-w-2xl "
+	class="card rounded-lg p-0 w-5/6 h-5/6 max-w-2xl "
 	bind:this={dialog}
 	on:close={() => (showModal = false)}
 	on:click|self={() => dialog.close()}
 >
 	<div on:click|stopPropagation class="h-full">
-		<div class="flex justify-end" >
+		<div class="absolute top-1 right-1" >
 			<!-- svelte-ignore a11y-autofocus -->
 			<button class="btn-icon variant-filled" autofocus on:click={() => dialog.close()}><X /></button>
 		</div>
 		<!-- <slot name="header" /> -->
-		<br>
 		<div class="h-full" style="max-height:80%">
-			<slot />
+			<slot  />
 		</div>
 
 		<br>

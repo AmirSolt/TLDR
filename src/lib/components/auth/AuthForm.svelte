@@ -1,87 +1,82 @@
 <script lang='ts'>
-    import {page} from '$app/stores';
-    import {login, signup, verifyToken} from './authFuncs';
 
-
-    $: ({supabase, session} = $page.data)
+    import AuthOptions from './AuthOptions.svelte';
+    import AuthEmail from './AuthEmail.svelte';
+    import AuthVerify from './AuthVerify.svelte';
+    import { ProgressRadial } from '@skeletonlabs/skeleton';
+    import {ArrowLeft} from 'lucide-svelte'
 
 
     let response:any;
+    let stepIndex:number = 0;
 
-    async function loginForm(e){
-        const form = e.target
-        const data = new FormData(form)
-        response = await login(supabase, data)
-        
-    }
-    async function signupForm(e) {
-        const form = e.target
-        const data = new FormData(form)
-        response = await signup(supabase, data)
-
-
-    }
-    async function verifyTokenForm(e) {
-        const form = e.target
-        const data = new FormData(form)
-        response = await verifyToken(supabase, data)
-
-    }
-
+    // import { onMount } from 'svelte';
+    // onMount(async () => {
+    //     stepIndex = 0;
+    // });
 
 </script>
 
 
 
-{#if response}
-    <p class={response.error?'variant-soft-error':'variant-soft-success'}>
-    </p>
-
-    <aside class={response.error?'alert variant-ghost-error':'alert variant-ghost-success'}>
-        <div>(icon)</div>
-        <div class="alert-message">
-            <h3 class="h3">{response.message}</h3>
-        </div>
-    </aside>
+{#if stepIndex === 1 || stepIndex === 2}
+    <div class="p-1">
+        <button class="btn-icon variant-filled" on:click={()=>stepIndex=0}><ArrowLeft /></button>
+    </div>
 {/if}
 
-<form  on:submit|preventDefault={loginForm}>
+<div class="p-4">
 
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email" required>
+    {#if response}
+        <p class={response.error?'variant-soft-error':'variant-soft-success'}>
+        </p>
+    
+        <aside class={response.error?'alert variant-ghost-error':'alert variant-ghost-success'}>
+            <div>(icon)</div>
+            <div class="alert-message">
+                <h3 class="h3">{response.message}</h3>
+            </div>
+        </aside>
+        <br>
+    {/if}
+    
+    
+    
+    
+    
+    {#if stepIndex === 0}
+        <h1>
+            Login Options
+        </h1>
+        <div class="py-3">
+            <AuthOptions bind:stepIndex />
+        </div>
+    {:else if stepIndex === 1}
+    
+    
+        <h1>
+            Email Login
+        </h1>
+        <div class="mt-8">
+            <AuthEmail bind:stepIndex bind:response />
+        </div>
+    
+    {:else if stepIndex === 2}
+        <div class="mb-8">
+            <button class="btn variant-filled" on:click={()=>stepIndex=0}>Go back</button>
+        </div>
+        <h1>
+            Verify
+        </h1>
+        <div class="mt-8">
+    
+            <AuthVerify bind:stepIndex bind:response />
+        </div>
 
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
+    {:else}
 
-    <button class="btn variant-filled" type="submit">Login</button>
-</form>
-
-
-<br>
-<br>
-<form  on:submit|preventDefault={signupForm}>
-
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email" required>
-
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-
-    <button class="btn variant-filled" type="submit">Register</button>
-</form>
-
-<br>
-<br>
-<form on:submit|preventDefault={verifyTokenForm}>
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email" required>
-
-    <label for="token">Token</label>
-    <input type="text" name="token" id="token" required>
-
-    <button class="btn variant-filled" type="submit">Verify</button>
-</form>
-
-<br>
-<br>
-
+    <ProgressRadial  stroke={100} meter="stroke-primary-500" track="stroke-primary-500/30" />
+    
+    
+    {/if}
+</div>
