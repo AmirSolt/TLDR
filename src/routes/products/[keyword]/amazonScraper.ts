@@ -7,6 +7,39 @@ import amazonScraper from 'amazon-buddy';
 
 
 
+
+
+
+export async function getSearchResults(keyword, country){
+    const products = await amazonScraper.products({ keyword: keyword, number: 10, country:country });
+    return products.result
+}
+
+
+export async function getProductInformation(asin, country){
+    const product_by_asin = await amazonScraper.asin({ asin: 'B07PKDKC53', country });
+    let result = product_by_asin.result[0];
+    return {
+        "title":result.title,
+        "description":result.description,
+        "feature_bullets":result.feature_bullets,
+        "price":getPrice(result),
+        "categories":getCategories(result),
+        "product_specifications":getProductSpecifications(result)
+    }
+}
+
+export async function getReviews(asin, country){
+    const reviews = await amazonScraper.reviews({ asin: asin, number: 10, country });
+    return reviews.result.map((review) => review.review)
+}
+
+
+
+
+
+
+
 function getPrice(result){
     return `${result.price.current_price} ${result.price.currency}`
 }
@@ -24,32 +57,6 @@ function getProductSpecifications(result){
             }
         });
     return product_information
-}
-
-
-
-export async function getSearchResults(keyword){
-    const products = await amazonScraper.products({ keyword: keyword, number: 10 });
-    return products.result
-}
-
-
-export async function getProductInformation(asin){
-    const product_by_asin = await amazonScraper.asin({ asin: 'B07PKDKC53' });
-    let result = product_by_asin.result[0];
-    return {
-        "title":result.title,
-        "description":result.description,
-        "feature_bullets":result.feature_bullets,
-        "price":getPrice(result),
-        "categories":getCategories(result),
-        "product_specifications":getProductSpecifications(result)
-    }
-}
-
-export async function getReviews(asin){
-    const reviews = await amazonScraper.reviews({ asin: asin, number: 50 });
-    return reviews.result.map((review) => review.review)
 }
 
 
