@@ -2,7 +2,7 @@
 	import { AppBar, LightSwitch } from '@skeletonlabs/skeleton'
 	import { Flame, Home } from 'lucide-svelte'
 
-	import SettingsMenu from '$lib/components/setttings/SettingsMenu.svelte';
+	import SettingsTrigger from '$lib/components/setttings/SettingsTrigger.svelte';
 
 
 	import { page } from '$app/stores'
@@ -32,7 +32,7 @@
 			</a>
 			
 			{#if user}
-			<SettingsMenu />
+			<SettingsTrigger />
 			
 			{/if}
 			

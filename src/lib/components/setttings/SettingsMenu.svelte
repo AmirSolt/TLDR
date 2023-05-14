@@ -1,32 +1,23 @@
-<script lang="ts">
-
-	import { drawerStore } from '@skeletonlabs/skeleton';
-	import type { DrawerSettings } from '@skeletonlabs/skeleton';
-
-
-	function triggerDrawer(position: 'left' | 'top' | 'right' | 'bottom'): void {
-		const drawerSettings: DrawerSettings = {
-			id: 'demo',
-			// Property Overrides
-			position: position,
-			bgDrawer: '',
-			bgBackdrop: 'bg-gradient-to-r from-slate-800/40 via-gray-500/40 to-cyan-300/40',
-			width: 'w-[280px] md:w-[480px]',
-			padding: 'p-4',
-			rounded: 'rounded-xl',
-			// Metadata
-			meta: 'Styled Drawer'
-		};
-		drawerStore.open(drawerSettings);
-	}
-
+<script lang='ts'>
+    import {Drawer} from '@skeletonlabs/skeleton';
 
 </script>
 
 
 
-<button class="btn-icon variant-filled" on:click={() => { triggerDrawer('right'); }}>
-	<i class="fa-solid fa-arrow-left"></i>
-</button>
-
-
+<Drawer  >
+    <div class="h-full flex flex-col pt-8 md:pt-20">
+        <a href="/account" class="btn variant-ghost-secondary h-20 mx-2 my-4 drop-shadow-md"  >
+            <h2 class="font-bold"> Account</h2>
+        </a>
+        <a href="/payment" class="btn variant-ghost-secondary h-20 mx-2 my-4 drop-shadow-md"  >
+            <h2 class="font-bold"> Payment</h2>
+        </a>
+        <a href="/payment" class="btn variant-ghost-secondary h-20 mx-2 my-4 drop-shadow-md"  >
+            <h2 class="font-bold"> Chat History</h2>
+        </a>
+        <a href="/logout" class="btn variant-ghost-secondary h-20 mx-2 my-4 drop-shadow-md"  >
+            <h2 class="font-bold"> Logout</h2>
+        </a>
+    </div>
+</Drawer>
