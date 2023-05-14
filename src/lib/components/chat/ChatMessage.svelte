@@ -2,6 +2,8 @@
 	import { Avatar } from '@skeletonlabs/skeleton';
 	import { ChatCompletionRequestMessageRoleEnum } from 'openai'
 	import type {Message} from './chatHelper'
+	import { ProgressRadial } from '@skeletonlabs/skeleton';
+
 	export let message: Message
 </script>
 
@@ -38,6 +40,19 @@
 			<p>{message.content}</p>
 		</div>
 	</div>
-</div>					
+</div>				
+
+{:else if message.role === "loading"}
+
+<div class="flex justify-start text-start">
+	<div class=" w-20 m-2">
+		<header class="">
+			<small class="font-bold">AI</small>
+		</header>
+		<div class="card p-4 variant-soft rounded-tr-none">
+			<ProgressRadial width='w-12'  stroke={100} meter="stroke-primary-500" track="stroke-primary-500/30" />	
+		</div>
+	</div>
+</div>		
 
 {/if}
