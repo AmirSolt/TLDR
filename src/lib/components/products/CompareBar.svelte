@@ -1,6 +1,6 @@
 <script lang="ts">
     import {X} from "lucide-svelte";
-    import Prompt from "$lib/components/prompt/Prompt.svelte";
+    import ChatPrompt from "$lib/components/prompt/ChatPrompt.svelte";
     let showPrompt: boolean = false;
 
     import {compareList} from '$lib/data/stores';
@@ -60,4 +60,4 @@
 </div>
 
 
-<Prompt bind:showPrompt={showPrompt} />
+<ChatPrompt bind:showPrompt={showPrompt} />

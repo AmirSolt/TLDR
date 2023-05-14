@@ -47,18 +47,25 @@
 
 	{:else}
 
+		{#if hasCredits}
 		<h3>
 			You have <b>{$wallet?.credits}</b>  credits.
 		</h3>
+		{:else}
+		<h3>
+			You have used up all your credit for this month.
+		</h3>
+		{/if}
+
 		<span></span>
 
 	
 		{#if !isSubscribed}
 
 			<h3>
-				You are not subscribed
+				Please choose a plan
 				<button class="btn variant-filled" type="button" on:click={() => (showModalPayment = true)}>
-					Subscribe
+					Plans
 				</button>
 			</h3>
 

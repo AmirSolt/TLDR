@@ -27,8 +27,8 @@
 				<LightSwitch />
 			</div>
 	
-			<a class="flex gap-1" href="/pricing">
-				Pricing
+			<a class="flex gap-1" href="/plans">
+				Plans
 			</a>
 			
 			{#if user}

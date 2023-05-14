@@ -8,12 +8,6 @@
     import PaymentPrompt from '$lib/components/payment/PaymentPrompt.svelte';
     import Chat from '$lib/components/chat/Chat.svelte';
 
-    import {compareList} from '$lib/data/stores';
-
-    // array that only includes 'auth', 'payment', 'chat'
-    type PromptTypes = Array<'auth' | 'payment' | 'chat'>;
-
-    export let promptTypes: PromptTypes = ['auth', 'payment', 'chat'];
     export let showPrompt: boolean = false;    
 
 </script>
@@ -25,9 +19,9 @@
         {:else if $wallet.plan=="FREE" && $wallet.credits < 1} 
             <!-- if free and usage pass credit -->
             <PaymentPrompt />
-        {:else if $wallet.plan=="PRO" && $wallet.credits < 1} 
+        {:else if $wallet.plan!="FREE" && $wallet.credits < 1} 
             <h3>
-                You have used up all your credits for this month.
+                You have used up all your credit for this month.
             </h3>
         {:else}
             <Chat />
