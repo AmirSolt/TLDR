@@ -26,14 +26,17 @@
     <div >
         {#each $compareList as product}
         <!-- using tailwind turnecate button text in a way that it starts from begining and cuts in the middle -->
-        <button type="button" class="w-48  btn variant-ghost m-2" on:click={()=>removeCompareProduct(product)}>
-                <img class="min-w-8 min-h-8 max-w-12 max-h-12 rounded-lg" src="{product.thumbnail}" alt="Thumbnail">
+        <button id="compare-button" type="button" class="relative w-32 h-24 p-0 btn m-2" on:click={()=>removeCompareProduct(product)}>
+                <!-- <img class="min-w-8 min-h-8 max-w-12 max-h-12 rounded-lg" src="{product.thumbnail}" alt="Thumbnail"> -->
+                <img class="max-w-full max-h-full rounded-lg" src="{product.thumbnail}" alt="Thumbnail">
                 <!-- <span class="truncate">
                     {product.title}
                 </span> -->
-                <span>
-                    <X />
-                </span>
+                <div class="absolute z-10 right-0 top-0 variant-filled rounded-full drop-shadow-2xl">
+                    <span>
+                        <X />
+                    </span>
+                </div>
             </button>
         {/each}
     </div>
@@ -63,3 +66,6 @@
 
 
 <ChatPrompt bind:showPrompt={showPrompt} />
+
+
+
