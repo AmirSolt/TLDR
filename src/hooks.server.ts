@@ -2,7 +2,7 @@ import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit';
 import type { Handle } from "@sveltejs/kit"
 
 import {PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY} from '$env/static/public';
-import {SERVICE_ROLE_KEY_SUPABASE} from '$env/static/private';
+import {PRIVATE_SERVICE_ROLE_KEY_SUPABASE} from '$env/static/private';
 
 
 export const handle: Handle = async ({ event, resolve }) => {
@@ -16,7 +16,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     event.locals.supabase = createSupabaseServerClient({
         supabaseUrl: PUBLIC_SUPABASE_URL,
-        supabaseKey: SERVICE_ROLE_KEY_SUPABASE,
+        supabaseKey: PRIVATE_SERVICE_ROLE_KEY_SUPABASE,
         event,
       });
     

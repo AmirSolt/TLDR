@@ -1,5 +1,4 @@
-import { redirect, error } from '@sveltejs/kit';
-import { SERVICE_ROLE_KEY_SUPABASE } from '$env/static/private';
+import { error } from '@sveltejs/kit';
 
 
 

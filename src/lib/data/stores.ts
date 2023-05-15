@@ -6,7 +6,21 @@ export const compareList = writable([]);
 export const wallet = writable({});
 
 
+export const userCountry = writable("US");
 
+
+
+import {getUserCountry} from "./utils/countryFinder";
+
+
+
+export async function loadUserCountry(){
+    
+        let country = await getUserCountry();
+        if(country){
+            userCountry.set(country);
+        }
+}
 
 
 export async function loadInWallet(user_id, supabase){

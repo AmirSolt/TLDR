@@ -2,18 +2,21 @@
     import {otpInit, verifyToken} from './authFuncs';
     import {page} from '$app/stores';
     import { TabGroup, Tab } from '@skeletonlabs/skeleton';
+    import { ReCaptcha } from '@mac-barrett/svelte-recaptcha';
+
     $: ({supabase} = $page.data)
 
     export let response;
     export let stepIndex;
 
-    let tabSet:string = "OTP";
 
+    let tabSet:string = "OTP";
     let usedEmail:string;
 
     async function otpInitForm(e){
         const form = e.target
-        const data = new FormData(form)
+        let data = new FormData(form)
+        data.set('captcha_token', Captcha.getRecaptchaResponse());
         usedEmail = data.get('email')?.toString()?? ''
         response = await otpInit(supabase, data)
         tabSet = "Verify"
@@ -52,6 +55,7 @@
             <input type="email" name="email" id="email" required>
             <button class="btn variant-filled" type="submit">Send OTP</button>
         </form>
+
 
     {:else if tabSet==="Verify"}
 

@@ -42,6 +42,7 @@
 		"@supabase/auth-helpers-sveltekit": "^0.9.4",
 		"@supabase/supabase-js": "^2.21.0",
 		"amazon-buddy": "^2.2.45",
+		"countries-and-timezones": "^3.4.1",
 		"gpt3-tokenizer": "^1.1.5",
 		"lucide-svelte": "^0.214.0",
 		"openai": "^3.2.1",

@@ -1,11 +1,11 @@
 import { error, json } from '@sveltejs/kit'
-import { STRIPE_WEBHOOK_SECRET } from '$env/static/private'
+import { PRIVATE_SECRET_STRIPE_KEY } from '$env/static/private'
 import { stripe } from '$lib/server/stripe'
 
 export const POST = async ({ request }) => {
 	let eventType: string | null = null
 
-	if (STRIPE_WEBHOOK_SECRET) {
+	if (PRIVATE_SECRET_STRIPE_KEY) {
 		const payload = await request.text()
 		const signature = request.headers.get('stripe-signature') ?? ''
 
@@ -13,7 +13,7 @@ export const POST = async ({ request }) => {
 			const event = stripe.webhooks.constructEvent(
 				payload,
 				signature,
-				STRIPE_WEBHOOK_SECRET
+				PRIVATE_SECRET_STRIPE_KEY
 			)
 			eventType = event.type
 		} catch (e) {

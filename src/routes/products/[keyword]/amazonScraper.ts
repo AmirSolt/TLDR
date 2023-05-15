@@ -5,13 +5,16 @@
 
 import amazonScraper from 'amazon-buddy';
 
-
+import {swapUrlWithAFfiliate} from './amazonAffiliate'
 
 
 
 
 export async function getSearchResults(keyword, country){
     const products = await amazonScraper.products({ keyword: keyword, number: 10, country:country });
+    products.result.forEach((product) => {
+        product.url = swapUrlWithAFfiliate(product.url)
+    })
     return products.result
 }
 
