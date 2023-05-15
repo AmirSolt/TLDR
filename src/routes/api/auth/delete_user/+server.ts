@@ -2,7 +2,7 @@ import { error } from '@sveltejs/kit';
 
 
 
-export const GET = async ({ locals: { getSession, supabase } }) => {
+export const GET = async ({ locals: { getSession, supabaseAuthServer } }) => {
 
     const user_id = (await getSession()).user.id
 
@@ -10,7 +10,7 @@ export const GET = async ({ locals: { getSession, supabase } }) => {
         throw error(400, "Something went wrong.")
 
 
-    const { data, error:errDelete } = await supabase.auth.admin.deleteUser(
+    const { data, error:errDelete } = await supabaseAuthServer.auth.admin.deleteUser(
         user_id,
         true
     )

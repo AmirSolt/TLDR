@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { wallet } from '$lib/data/stores';
-	$: ({ supabase, session } = $page.data);
+	$: ({ session } = $page.data);
 
 	import AuthForm from '$lib/components/auth/AuthForm.svelte';
 	import PaymentPrompt from '$lib/components/payment/PaymentPrompt.svelte';
@@ -26,6 +26,16 @@
 	}else if ($wallet?.credits < 4) {
 		highCredits = false;
 		bgColor = "warning"
+	}
+
+
+
+
+	async function testStripe(){
+		let response = await fetch('/api/payment/subscription/create', {method:"GET"})
+		let data = await response.json()
+		console.log(data)
+
 	}
 
 
@@ -82,3 +92,9 @@
 
 </div>
 {/key}
+
+
+
+<button class="btn variant-filled" type="button" on:click={testStripe}>
+	TEST STRIPE
+</button>

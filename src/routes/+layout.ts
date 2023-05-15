@@ -4,7 +4,7 @@ import {PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY} from '$env/static/public'
 
 export const load = async ({ fetch, data, depends }) => {
     depends('supabase:auth');
-    const supabase = createSupabaseLoadClient({
+    const supabaseAuthClient = createSupabaseLoadClient({
         supabaseUrl: PUBLIC_SUPABASE_URL,
         supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
         event: { fetch },
@@ -14,11 +14,11 @@ export const load = async ({ fetch, data, depends }) => {
 
     const {
         data: { session }
-    } = await supabase.auth.getSession();
+    } = await supabaseAuthClient.auth.getSession();
     // // ===============================
 
     return { 
-        supabase,
+        supabaseAuthClient,
         session,
     };
 };

@@ -23,7 +23,7 @@ export async function loadUserCountry(){
 }
 
 
-export async function loadInWallet(user_id, supabase){
+export async function loadInWallet(user_id, supabaseAuthClient){
 
     let doesWalletExist = false;
 
@@ -38,7 +38,7 @@ export async function loadInWallet(user_id, supabase){
 	});
 
     if (!doesWalletExist) {
-        let results = await supabase.from('wallets').select('plan, credits').eq('id', user_id).single()
+        let results = await supabaseAuthClient.from('wallets').select('plan, credits').eq('id', user_id).single()
         if(results.error){
             console.log("wallets query errors:",results.error);
             return;

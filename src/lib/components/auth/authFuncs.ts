@@ -5,7 +5,7 @@ import {loadInWallet} from '$lib/data/stores'
 
 
 
-export const otpInit = async (supabase, formData ) => {
+export const otpInit = async (supabaseAuthClient, formData ) => {
     const req = Object.fromEntries(formData) 
 
 
@@ -20,7 +20,7 @@ export const otpInit = async (supabase, formData ) => {
     //     }
     // }
 
-    const { data, error: err } = await supabase.auth.signInWithOtp({
+    const { data, error: err } = await supabaseAuthClient.auth.signInWithOtp({
         email: email,
         // options:{
         //     captchaToken : hCaptchaToken
@@ -43,7 +43,7 @@ export const otpInit = async (supabase, formData ) => {
 }
 
 
-export const verifyToken = async (supabase, formData ) => {
+export const verifyToken = async (supabaseAuthClient, formData ) => {
     const req = Object.fromEntries(formData) 
     const email = req.email as string
     const token = req.token as string
@@ -55,11 +55,14 @@ export const verifyToken = async (supabase, formData ) => {
         }
     }
 
-    const { data, error: err } = await supabase.auth.verifyOtp({
+    const { data, error: err } = await supabaseAuthClient.auth.verifyOtp({
         email: email,
         token: token,
         type:"email",
     })
+
+
+    // fetch('/api/payment/subscription/create', {method:"GET"})
 
     
     if (err) {
@@ -69,7 +72,7 @@ export const verifyToken = async (supabase, formData ) => {
         }
     }
     
-    loadInWallet(data.user.id, supabase);
+    loadInWallet(data.user.id, supabaseAuthClient);
 
     return {
         error: false,

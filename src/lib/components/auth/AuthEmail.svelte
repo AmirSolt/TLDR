@@ -4,7 +4,7 @@
     import { TabGroup, Tab } from '@skeletonlabs/skeleton';
     import HCaptcha from './HCaptcha.svelte';
 
-    $: ({supabase} = $page.data)
+    $: ({supabaseAuthClient} = $page.data)
 
     export let response;
     export let stepIndex;
@@ -17,13 +17,13 @@
         const form = e.target
         let data = new FormData(form)
         usedEmail = data.get('email')?.toString()?? ''
-        response = await otpInit(supabase, data)
+        response = await otpInit(supabaseAuthClient, data)
         tabSet = "Verify"
     }
     async function verifyTokenForm(e) {
         const form = e.target
         const data = new FormData(form)
-        response = await verifyToken(supabase, data)
+        response = await verifyToken(supabaseAuthClient, data)
 
         stepIndex = 2;
     }

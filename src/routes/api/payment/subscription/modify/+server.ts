@@ -13,6 +13,7 @@ async function updateSubscription(request, response){
     const subscription = await stripe.subscriptions.retrieve(
         request.body.subscriptionId
       );
+
       const updatedSubscription = await stripe.subscriptions.update(
         request.body.subscriptionId,
         {
@@ -23,8 +24,11 @@ async function updateSubscription(request, response){
               price: "price_H1NlVtpo6ubk0m",
             },
           ],
+          expand: ['latest_invoice.payment_intent'],
         }
+
       );
+
+      updatedSubscription?.latest_invoice?.payment_intent.client_secret
     
-      response.send(updatedSubscription);
 }

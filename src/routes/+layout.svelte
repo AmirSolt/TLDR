@@ -13,7 +13,7 @@
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	export let data;
-	$: ({ supabase, session } = data);
+	$: ({ supabaseAuthClient, session } = data);
 	
 	
 	import {loadInWallet, loadUserCountry} from '$lib/data/stores'
@@ -23,9 +23,9 @@
 
 	onMount(() => {
 		loadUserCountry();
-		loadInWallet(session?.user.id, supabase)
+		loadInWallet(session?.user.id, supabaseAuthClient)
 		// ================================
-		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
+		const { data } = supabaseAuthClient.auth.onAuthStateChange((event, _session) => {
 			if (_session?.expires_at !== session?.expires_at) {
 				invalidate('supabase:auth');
 			}
