@@ -38,7 +38,7 @@ export async function loadInWallet(user_id, supabaseAuthClient){
 	});
 
     if (!doesWalletExist) {
-        let results = await supabaseAuthClient.from('wallets').select('plan, credits').eq('id', user_id).single()
+        let results = await supabaseAuthClient.from('wallets').select('plan, credits, stripe_sub_id, stripe_customer_id').eq('id', user_id).single()
         if(results.error){
             console.log("wallets query errors:",results.error);
             return;

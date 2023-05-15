@@ -1,7 +1,7 @@
 import { stripe, priceIds } from '$lib/server/stripe'
 import { json } from '@sveltejs/kit';
 import {supabaseService} from '$lib/server/supabase'
-
+import {wallet} from '$lib/data/stores'
 
 export const GET = async ({ locals: { getSession } }) => {
 
@@ -9,30 +9,33 @@ export const GET = async ({ locals: { getSession } }) => {
 
     const session = await getSession();
 
-    let { data, error: err } = await supabaseService.from('wallets').select('stripe_sub_id, stripe_customer_id').eq('id', session.user.id).single()
+    let walletData:any;
 
-    if (err)
-        return json({ error: true, message: err })
+    wallet.subscribe((data) => {
+      walletData = data;
+    })
 
+    if(!walletData)
+        return json({ error: true, message: "no wallet data" })
 
-    let customer_id = data.stripe_customer_id;
-    let subscription_id = data.stripe_sub_id;
-
-    if (customer_id === null) {
-        customer_id = await createCustomer(session.user.email);
+    if (walletData.stripe_customer_id === null) {
+        walletData.stripe_customer_id = await createCustomer(session.user.email);
     }
 
-    if (subscription_id === null) {
-        subscription_id = await createSubscription(customer_id);
+    if (walletData.stripe_sub_id === null) {
+        walletData.stripe_sub_id = await createSubscription(walletData.stripe_customer_id);
     }
    
 
-    let { data:data_updated, error: err_updated } = await supabaseService.from('wallets').update({ stripe_customer_id: customer_id, stripe_sub_id: subscription_id }).eq('id', session.user.id);
-
-
+    let { data:data_updated, error: err_updated } = await supabaseService
+    .from('wallets')
+    .update({ stripe_customer_id: walletData.stripe_customer_id, stripe_sub_id: walletData.stripe_sub_id })
+    .eq('id', session.user.id);
 
     if (err_updated)
-        return json({ error: true, message: err })
+        return json({ error: true, message: err_updated })
+
+    wallet.set(walletData);
 
 
     return json({ error: false, message: "success" });
