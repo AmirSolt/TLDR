@@ -13,6 +13,7 @@ import {z} from 'zod'
 // })
 export const otpSchema = z.object({
     email: z.string().email(),
+    hCaptchaToken: z.string().min(6),
 })
 export const tokenVerifySchema = z.object({
     email: z.string().email(),

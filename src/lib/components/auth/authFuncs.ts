@@ -8,13 +8,12 @@ import {loadInWallet} from '$lib/data/stores'
 export const otpInit = async (supabase, formData ) => {
     const req = Object.fromEntries(formData) 
 
-    console.log("----------------------------")
-    console.log(req)
 
     const email = req.email as string
-    // const hCaptchaToken = req.h-captcha-response as string
+    const hCaptchaToken = formData.get("h-captcha-response") as string
 
-    if(!otpSchema.safeParse({email}).success){
+
+    if(!otpSchema.safeParse({email, hCaptchaToken}).success){
         return {
             error: true,
             message: "Invalid credentials"
@@ -23,6 +22,9 @@ export const otpInit = async (supabase, formData ) => {
 
     const { data, error: err } = await supabase.auth.signInWithOtp({
         email: email,
+        options:{
+            captchaToken : hCaptchaToken
+        }
     })
 
     

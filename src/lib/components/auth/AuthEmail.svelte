@@ -2,7 +2,7 @@
     import {otpInit, verifyToken} from './authFuncs';
     import {page} from '$app/stores';
     import { TabGroup, Tab } from '@skeletonlabs/skeleton';
-    import { ReCaptcha } from '@mac-barrett/svelte-recaptcha';
+    import HCaptcha from './HCaptcha.svelte';
 
     $: ({supabase} = $page.data)
 
@@ -16,7 +16,6 @@
     async function otpInitForm(e){
         const form = e.target
         let data = new FormData(form)
-        data.set('captcha_token', Captcha.getRecaptchaResponse());
         usedEmail = data.get('email')?.toString()?? ''
         response = await otpInit(supabase, data)
         tabSet = "Verify"
@@ -32,6 +31,7 @@
 
 
 </script>
+
 
 
 
@@ -54,6 +54,7 @@
             <label for="email">Email</label>
             <input type="email" name="email" id="email" required>
             <button class="btn variant-filled" type="submit">Send OTP</button>
+            <HCaptcha />
         </form>
 
 
