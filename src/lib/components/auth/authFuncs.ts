@@ -13,18 +13,18 @@ export const otpInit = async (supabase, formData ) => {
     const hCaptchaToken = formData.get("h-captcha-response") as string
 
 
-    if(!otpSchema.safeParse({email, hCaptchaToken}).success){
-        return {
-            error: true,
-            message: "Invalid credentials"
-        }
-    }
+    // if(!otpSchema.safeParse({email, hCaptchaToken}).success){
+    //     return {
+    //         error: true,
+    //         message: "Invalid credentials"
+    //     }
+    // }
 
     const { data, error: err } = await supabase.auth.signInWithOtp({
         email: email,
-        options:{
-            captchaToken : hCaptchaToken
-        }
+        // options:{
+        //     captchaToken : hCaptchaToken
+        // }
     })
 
     
