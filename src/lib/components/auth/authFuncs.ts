@@ -2,7 +2,7 @@
 
 import { otpSchema, tokenVerifySchema } from '$lib/schemas/auth'
 import {loadInWallet} from '$lib/data/stores'
-
+import {walletCreateTest} from '$lib/components/payment/subscriptions'
 
 
 export const otpInit = async (supabaseAuthClient, formData ) => {
@@ -62,8 +62,6 @@ export const verifyToken = async (supabaseAuthClient, formData ) => {
     })
 
 
-    // fetch('/api/payment/subscription/create', {method:"GET"})
-
     
     if (err) {
         return {
@@ -72,7 +70,8 @@ export const verifyToken = async (supabaseAuthClient, formData ) => {
         }
     }
     
-    loadInWallet(data.user.id, supabaseAuthClient);
+    await loadInWallet(data.user.id, supabaseAuthClient);
+    await walletCreateTest()
 
     return {
         error: false,
@@ -83,5 +82,3 @@ export const verifyToken = async (supabaseAuthClient, formData ) => {
 
 
 
-
-	

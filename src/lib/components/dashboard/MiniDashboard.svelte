@@ -29,17 +29,23 @@
 	}
 
 
+	
 
+	
+
+	import {walletCreateTest, walletModifyTest} from '$lib/components/payment/subscriptions'
 
 	async function testStripe(){
-		let response = await fetch('/api/payment/subscription/create', {method:"GET"})
-		let data = await response.json()
-		console.log(data)
-
+		walletModifyTest("PRO")
 	}
 
 
 </script>
+
+<h1>
+	{$wallet.stripe_customer_id}
+</h1>
+
 
 {#key bgColor}
 

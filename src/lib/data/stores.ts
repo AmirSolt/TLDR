@@ -32,7 +32,7 @@ export async function loadInWallet(user_id, supabaseAuthClient){
 
 
     wallet.subscribe(value => {
-        if(value.id === user_id){
+        if(Object.keys(value).length > 0){
             doesWalletExist = true;
         }
 	});
@@ -45,7 +45,6 @@ export async function loadInWallet(user_id, supabaseAuthClient){
         }
 
         console.log("wallets query results:",results.data);
-
         wallet.set(
             results.data?? {}
         )
