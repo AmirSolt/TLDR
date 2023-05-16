@@ -9,12 +9,15 @@
   
     import {onMount} from 'svelte'
     onMount(() => {
-        // read href query "kw" and set it to the input field
-        const urlParams = new URLSearchParams(window.location.search);
-        const kw = urlParams.get('kw');
-        searchTerm = kw??'';
+        getSearchTermFromUrl();
     })
 
+    function getSearchTermFromUrl(){
+        'URL example: /products/keyword?country='
+        const url = window.location.href;
+        const urlParts = url.split('/');
+        searchTerm = urlParts[urlParts.length-1].split('?')[0];
+    }
 
 
     async function searchForm(keyword, country) {
