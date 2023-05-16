@@ -10,7 +10,7 @@
 
 {#if message.role === ChatCompletionRequestMessageRoleEnum.System}
 
-<div></div>
+<span></span>
 
 {:else if message.role === ChatCompletionRequestMessageRoleEnum.User}
 
