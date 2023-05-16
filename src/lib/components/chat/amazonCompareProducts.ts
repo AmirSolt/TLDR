@@ -18,6 +18,7 @@ export async function getCompareProducts(){
     }).catch(err => {
         console.log(err);
     })
+
     return results
 }
 
