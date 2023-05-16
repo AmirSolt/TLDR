@@ -16,16 +16,15 @@
     import { ProgressBar } from '@skeletonlabs/skeleton';
     $: progressValue = ($compareList.length/3)*100;
 
+    
 
-    import {getProductsByAsins} from '$lib/data/amazon/amazonScraper'
-
-    function getCompareProducts(){
-        let asins:string[] = [];
-        $compareList.forEach(product => {
-            asins.push(product.asin);
-        });
-        return getProductsByAsins(asins, $userCountry)
+    function openChatListener(){
+        showPrompt = true;
     }
+
+
+
+   
 
 </script>
 
@@ -55,7 +54,7 @@
 
     <div class="me-3">
         {#if $compareList.length>0}
-        <button class="btn variant-filled-primary h-14" type="button" on:click={() => (showPrompt = true)}>
+        <button class="btn variant-filled-primary h-14" type="button" on:click={openChatListener}>
             Open Chat
         </button>  
         
@@ -76,7 +75,7 @@
 </div>
 
 
-<ChatPrompt bind:showPrompt={showPrompt} compareProducts={()=>getCompareProducts()}  />
+<ChatPrompt bind:showPrompt={showPrompt} />
 
 
 

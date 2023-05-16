@@ -16,19 +16,19 @@
 	const loadingMessage: Message = { role: ROLES.Loading, content: '' };
 	let elemChat: HTMLElement;
 	let messages: Message[] = [
-		// {
-		// 	role: ROLES.Assistant,
-		// 	content: "I'm Assistant"
-		// },
-		// {
-		// 	role: ROLES.User,
-		// 	content: "I'm user again"
-		// }
+		{
+			role: ROLES.Assistant,
+			content: "I'm here to help you find the best product for you."
+		},
 	];
 
-	export let compareProducts;
-	console.log("////",compareProducts);
+	import {getCompareProducts} from './amazonCompareProducts'
 
+	(async () => {
+		console.log('compareProducts');
+		console.log(await getCompareProducts());
+	})();
+	
 	const systemMassege: string = 'Only respond with the sentence: I am a banana'; // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	let loadingResponse: boolean = false;

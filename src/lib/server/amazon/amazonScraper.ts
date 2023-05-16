@@ -24,17 +24,10 @@ export async function getSearchResults(keyword, country){
 
 
 export async function getProductsByAsins(asins:string[], userCountry:string){
-
-    console.log("////////////////ASINS///////////////")
-    console.log(asins)
-
     let results=[];
-    Promise.all(asins.map( asin => getProductByAsin(asin, userCountry) )).then(
+    await Promise.all(asins.map( asin => getProductByAsin(asin, userCountry) )).then(
         (values) => results = values
     ).catch((error)=> console.log(error))
-
-    console.log("///////////////RESULTS////////////////")
-    console.log(results)
 
     return results
 }
@@ -43,11 +36,11 @@ export async function getProductsByAsins(asins:string[], userCountry:string){
 
 async function getProductByAsin(asin:string, userCountry:string){
     let results=[];
-    Promise.all([getProductInformation(asin, userCountry), getReviews(asin, userCountry)]).then(
+    await Promise.all([getProductInformation(asin, userCountry), getReviews(asin, userCountry)]).then(
         (values) => results = values
     ).catch((error)=> console.log(error))
 
-    return results
+    return {"product_information":results[0], "reviews":results[1]}
 }
 
 
