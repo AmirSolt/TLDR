@@ -1,4 +1,4 @@
-import {getProductsByAsins} from '$lib/server/amazon/amazonScraper'
+import {getProductsByAsins} from '$lib/server/amazon/amazonScraperApi'
 import { json } from '@sveltejs/kit';
 
 

@@ -42,10 +42,6 @@
 
 </script>
 
-<h1>
-	{$wallet.stripe_customer_id}
-</h1>
-
 
 {#key bgColor}
 

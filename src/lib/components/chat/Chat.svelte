@@ -15,23 +15,36 @@
 	}
 	const loadingMessage: Message = { role: ROLES.Loading, content: '' };
 	let elemChat: HTMLElement;
-	let messages: Message[] = [
-		{
+	let messages: Message[] = [];
+	let loadingResponse: boolean = true;
+
+
+	// ========================== Fetch amazon products by asin ==========================
+	import {getCompareProducts} from './amazonCompareProducts'
+	import {onMount} from 'svelte';
+
+	let systemMassege: string = 'Only respond with the sentence: I am a banana'; // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+	async function getSystemMessage(){
+		systemMassege = "User will ask you some questions about these products. please answer them in very short sentences."
+		systemMassege += await getCompareProducts()
+		messages = [{
 			role: ROLES.Assistant,
 			content: "I'm here to help you find the best product for you."
-		},
-	];
+		},];
+		loadingResponse=false;
+	}
 
-	import {getCompareProducts} from './amazonCompareProducts'
-
-	(async () => {
-		console.log('compareProducts');
-		console.log(await getCompareProducts());
-	})();
+	onMount(() => {
+		getSystemMessage()
+		
+	});
 	
-	const systemMassege: string = 'Only respond with the sentence: I am a banana'; // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-	let loadingResponse: boolean = false;
+	// ===================================================================================
+
+
+
 	let currentMessage: Message = resetCurrentMessage();
 
 	function resetCurrentMessage(): Message {

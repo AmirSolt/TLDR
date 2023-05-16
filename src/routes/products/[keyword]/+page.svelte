@@ -22,7 +22,7 @@
 		{:else}
 			<div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 grid-rows-3">
 				{#each products ?? [] as product}
-					<Card {product} />
+					<Card {product} />	
 				{/each}
 			</div>
 		{/if}

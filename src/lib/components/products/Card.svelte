@@ -1,6 +1,7 @@
 
 <script lang="ts">
     export let product:any; 
+
     
     import StarRating from "./StarRating.svelte";
 
@@ -30,52 +31,53 @@
 
 <div id="product_card"  class=" flex flex-col justify-between  card drop-shadow-md !bg-transparent rounded-lg p-4 overflow-hidden"> 
 
-    <!-- <Prompt {product} bind:showPrompt /> -->
 
-
+    <!-- Media -->
     <header>
-        <a href="{product.url}" id="media" target="_blank" rel="noopener">
+        <a href="{product.link}" id="media" target="_blank" rel="noopener">
             <div class="drop-shadow-lg rounded-lg">
-                <img src="{product.thumbnail}" alt="Thumbnail" class=" w-full max-w-md max-h-md rounded-lg ">
+                <img src="{product.image}" alt="Thumbnail" class=" w-full max-w-md max-h-md rounded-lg ">
             </div>
         </a>
     </header>
     
 
     <div id="info">
-        <div id="brand" class="row">
-            
+       
+        <div id="title" class="row">
+            <small>{product.brand}</small>
         </div>
+
+        <!-- Title -->
         <div id="title" class="row">
             <h3>{product.title}</h3>
         </div>
+
+        <!-- Ratings -->
         <div id="review" class="row flex items-center">
-            <StarRating rating={product.reviews.rating} />
-            <span class="mx-2">({product.reviews.total_reviews})</span>
+            <StarRating rating={product.rating} />
+            <span class="mx-2">({product.ratings_total})</span>
             
         </div>
+
+        <!-- Prices -->
+        <!-- check if product has prices -->
         <div id="price" class="row">
+
             <h3>
-                {product.price.currency} {product.price.current_price}
+                {product.prices[0].currency} {product.prices[0].value}
             </h3>
 
-            {#if product.price.discounted}
+            {#if product.prices.length > 2}
                 <s>
-                    {product.price.currency} {product.price.before_price}
+                    {product.price[1].currency} {product.price[1].value}
                 </s>
-                {#if product.price.savings_percent > product.price.savings_amount}
-                    <h3>
-                        {product.price.savings_percent}% off
-                    </h3>
-                {:else}
-                    <h3>
-                        {product.price.currency} {product.price.savings_amount} off
-                    </h3>
-                {/if}
             {/if}
 
         </div>
-        <div id="extra" class="row">
+
+        <!-- Badges -->
+        <!-- <div id="extra" class="row">
             {#if product.bestSeller || product.amazonChoice}
                 <h3>
                     Marked as {[product.bestSeller, product.amazonChoice].join("and ")}
@@ -87,7 +89,7 @@
                     {product.amazonPrime}
                 </h3>
             {/if}
-        </div>
+        </div> -->
 
     </div>
 
@@ -100,7 +102,7 @@
                 </button>
             {:else}
                 <button class="btn variant-filled w-1/2 h-full" type="button" on:click={addCompareProduct}>
-                    +Compare
+                    + Compare
                 </button>
             {/if}
         </div>
@@ -109,4 +111,3 @@
     </footer>
 
 </div>
-

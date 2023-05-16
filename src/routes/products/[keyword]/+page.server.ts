@@ -5,7 +5,7 @@
 
 import {searchSchema} from '$lib/schemas/products';
 // import {getSearchResults} from './sampleData'
-import {getSearchResults} from '$lib/server/amazon/amazonScraper'
+import {getSearchResults} from '$lib/server/amazon/amazonScraperApi'
 export const load = async ({params, url }) => {
 
     const {keyword} = params;

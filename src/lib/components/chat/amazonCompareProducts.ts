@@ -3,7 +3,7 @@ import {compareList, userCountry} from '$lib/data/stores';
 
 
 export async function getCompareProducts(){
-    let results;
+    let results:string="";
     await fetch('/api/products/by_asins', {
         method: 'POST',
         headers: {
@@ -19,14 +19,18 @@ export async function getCompareProducts(){
         console.log(err);
     })
 
-    return results
+    return JSON.stringify(results);
 }
 
 
 
 function getAsins(){
     let asins:string[]=[];
-    compareList.subscribe(values => asins = values);
+    compareList.subscribe(values => {
+        values.forEach(value => {
+            asins.push(value.asin)
+        });
+    });
     return asins;
 }
 
