@@ -9,6 +9,7 @@
     import Chat from '$lib/components/chat/Chat.svelte';
 
     export let showPrompt: boolean = false;    
+    export let compareProducts;
 
 </script>
 
@@ -24,7 +25,7 @@
                 You have used up all your credit for this month.
             </h3>
         {:else}
-            <Chat />
+            <Chat {compareProducts} />
         {/if}
     {/if}
 </Modal>

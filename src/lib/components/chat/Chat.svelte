@@ -26,6 +26,9 @@
 		// }
 	];
 
+	export let compareProducts;
+	console.log("////",compareProducts);
+
 	const systemMassege: string = 'Only respond with the sentence: I am a banana'; // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	let loadingResponse: boolean = false;
@@ -64,13 +67,15 @@
 				messages: messages,
 				systemMessage: systemMassege
 			})
-		}).then((res) => res.json()).then((data) => {
-			const AIMessage = data.message.content
-			messages = [...messages, { role: ROLES.Assistant, content: AIMessage }];
-		}).catch((err) => {
-			console.log(err);
-		});
-
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				const AIMessage = data.message.content;
+				messages = [...messages, { role: ROLES.Assistant, content: AIMessage }];
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 
 		loadingResponse = false;
 

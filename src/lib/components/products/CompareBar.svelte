@@ -4,7 +4,7 @@
     import { Avatar } from '@skeletonlabs/skeleton';
     let showPrompt: boolean = false;
 
-    import {compareList} from '$lib/data/stores';
+    import {compareList, userCountry} from '$lib/data/stores';
     function removeCompareProduct(product){
         compareList.update(
             (list) => list.filter((item) => item.asin !== product.asin)
@@ -15,6 +15,17 @@
     // import { ProgressRadial } from '@skeletonlabs/skeleton';
     import { ProgressBar } from '@skeletonlabs/skeleton';
     $: progressValue = ($compareList.length/3)*100;
+
+
+    import {getProductsByAsins} from '$lib/data/amazon/amazonScraper'
+
+    function getCompareProducts(){
+        let asins:string[] = [];
+        $compareList.forEach(product => {
+            asins.push(product.asin);
+        });
+        return getProductsByAsins(asins, $userCountry)
+    }
 
 </script>
 
@@ -65,7 +76,7 @@
 </div>
 
 
-<ChatPrompt bind:showPrompt={showPrompt} />
+<ChatPrompt bind:showPrompt={showPrompt} compareProducts={()=>getCompareProducts()}  />
 
 
 

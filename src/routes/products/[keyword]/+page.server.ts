@@ -5,7 +5,7 @@
 
 import {searchSchema} from '$lib/schemas/products';
 // import {getSearchResults} from './sampleData'
-import {getSearchResults} from './amazonScraper'
+import {getSearchResults} from '$lib/data/amazon/amazonScraper'
 export const load = async ({params, url }) => {
 
     const {keyword} = params;
@@ -25,6 +25,7 @@ export const load = async ({params, url }) => {
             streamed: {products: []}
         }
     }
+
 
 
     return{

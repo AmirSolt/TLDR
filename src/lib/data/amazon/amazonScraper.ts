@@ -19,7 +19,39 @@ export async function getSearchResults(keyword, country){
 }
 
 
-export async function getProductInformation(asin, country){
+
+
+
+
+export async function getProductsByAsins(asins:string[], userCountry:string){
+
+    console.log("////////////////ASINS///////////////")
+    console.log(asins)
+
+    let results=[];
+    Promise.all(asins.map( asin => getProductByAsin(asin, userCountry) )).then(
+        (values) => results = values
+    ).catch((error)=> console.log(error))
+
+    console.log("///////////////RESULTS////////////////")
+    console.log(results)
+
+    return results
+}
+
+
+
+async function getProductByAsin(asin:string, userCountry:string){
+    let results=[];
+    Promise.all([getProductInformation(asin, userCountry), getReviews(asin, userCountry)]).then(
+        (values) => results = values
+    ).catch((error)=> console.log(error))
+
+    return results
+}
+
+
+async function getProductInformation(asin, country){
     const product_by_asin = await amazonScraper.asin({ asin: 'B07PKDKC53', country });
     let result = product_by_asin.result[0];
     return {
@@ -32,7 +64,7 @@ export async function getProductInformation(asin, country){
     }
 }
 
-export async function getReviews(asin, country){
+async function getReviews(asin, country){
     const reviews = await amazonScraper.reviews({ asin: asin, number: 10, country });
     return reviews.result.map((review) => review.review)
 }
@@ -62,38 +94,3 @@ function getProductSpecifications(result){
     return product_information
 }
 
-
-
-// const scraper =  async () => {
-//     try {
-//         console.log("Starting scraping products")
-
-//         console.time('main');
-
-//         let asin = 'B07PKDKC53'
-    
-//         // const products = await amazonScraper.products({ keyword: 'Bag', number: 50 });
-        
-        
-//         let product_information = await getProductInformation(asin)
-//         let reviews = await getReviews(asin)
-        
-//         console.log(`Found ${reviews.length} reviews`)
-
-//         const data = {
-//             "product_information":product_information,
-//             "reviews":reviews
-//         }
-
-//         fs.writeFile ("product_data.json", JSON.stringify(data), function(err) {
-//             if (err) throw err;
-//             console.log('complete');
-//             }
-//         );
-
-//         console.timeEnd('main');
-
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
