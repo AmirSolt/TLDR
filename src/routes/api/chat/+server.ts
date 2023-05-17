@@ -95,7 +95,7 @@ async function getChatGPTResponse(messages, systemMessage){
 		throw new Error('Query too large')
 	}
 
-
+	console.log("tokenCount",tokenCount)
 
 	const messagesFormated: ChatCompletionRequestMessage[] = [
 		{ role: ChatCompletionRequestMessageRoleEnum.System, content: systemMessage },

@@ -44,15 +44,26 @@ export async function getSearchResults(keyword, country){
             throw new Error("No search_results in data")
         }
 
+        if(data["search_results"].length == 0){
+            throw new Error("Data search_results is empty")
+        }
+
+
 
         products = data["search_results"].filter((product)=> {
             try{
                 searchResultSchema.parse(product)
                 return true
             }catch(e){
+                console.log(e)
                 return false
             }
         })
+
+        if(products.length == 0){
+            throw new Error("products is empty after filtering")
+        }
+
     }).catch((error)=> {
         console.log(error)
         console.log("Found an error in getSearchResults")
